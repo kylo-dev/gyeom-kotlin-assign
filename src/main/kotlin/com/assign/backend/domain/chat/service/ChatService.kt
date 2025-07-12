@@ -10,7 +10,9 @@ import com.assign.backend.domain.thread.entity.ThreadEntity
 import com.assign.backend.domain.thread.repository.ThreadJpaRepository
 import com.assign.backend.domain.thread.repository.ThreadMapper
 import com.assign.backend.domain.user.service.UserService
+import com.assign.backend.global.exception.CustomNotFoundException
 import org.springframework.data.domain.Pageable
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -61,5 +63,10 @@ class ChatService(
                 .toList()
             ThreadGroupResponse.of(thread.id!!, chats)
         }
+    }
+
+    fun getChatById(chatId: Long): ChatEntity {
+        return chatRepository.findByIdOrNull(chatId)
+            ?: throw CustomNotFoundException("존재하지 않는 채팅입니다.")
     }
 }

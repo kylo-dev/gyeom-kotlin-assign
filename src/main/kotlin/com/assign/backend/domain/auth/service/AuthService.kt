@@ -1,7 +1,7 @@
 package com.assign.backend.domain.auth.service
 
-import com.assign.backend.domain.user.controller.dto.request.LoginRequest
-import com.assign.backend.domain.user.controller.dto.request.SignupRequest
+import com.assign.backend.domain.auth.controller.dto.request.LoginRequest
+import com.assign.backend.domain.auth.controller.dto.request.SignupRequest
 import com.assign.backend.domain.user.repository.UserMapper
 import com.assign.backend.domain.user.repository.UserRepository
 import com.assign.backend.domain.user.service.UserService

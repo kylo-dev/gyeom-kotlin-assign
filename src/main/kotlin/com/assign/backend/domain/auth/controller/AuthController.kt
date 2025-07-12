@@ -1,8 +1,8 @@
 package com.assign.backend.domain.auth.controller
 
 import com.assign.backend.domain.auth.service.AuthService
-import com.assign.backend.domain.user.controller.dto.request.LoginRequest
-import com.assign.backend.domain.user.controller.dto.request.SignupRequest
+import com.assign.backend.domain.auth.controller.dto.request.LoginRequest
+import com.assign.backend.domain.auth.controller.dto.request.SignupRequest
 import com.assign.backend.global.jwt.TokenResponse
 import com.assign.backend.global.UrlConstant
 import com.assign.backend.global.response.ResponseData

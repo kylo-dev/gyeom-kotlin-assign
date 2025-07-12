@@ -1,4 +1,4 @@
-package com.assign.backend.domain.user.controller.dto.request
+package com.assign.backend.domain.auth.controller.dto.request
 
 data class LoginRequest(
     val email: String,

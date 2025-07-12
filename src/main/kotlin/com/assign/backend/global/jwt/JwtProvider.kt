@@ -1,0 +1,88 @@
+package com.assign.backend.global.jwt
+
+import com.assign.backend.domain.user.entity.Role
+import com.assign.backend.domain.user.service.UserService
+import com.assign.backend.global.logger
+import com.assign.backend.global.security.CustomAuthentication
+import io.jsonwebtoken.*
+import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.security.core.Authentication
+import org.springframework.stereotype.Component
+import java.util.*
+import javax.crypto.SecretKey
+
+@Component
+class JwtProvider(
+    @Value("\${jwt.secret}") secretKey: String,
+    private val userService: UserService,
+) {
+    private val secretKey: SecretKey = Keys.hmacShaKeyFor(secretKey.toByteArray())
+    private val expirationMs = 24 * 60 * 60 * 7000
+
+    fun generateToken(userId: Long, role: Role): String {
+        val now = Date()
+        val expiryDate = Date(now.time + expirationMs)
+
+        return Jwts.builder()
+            .claims(
+                mapOf(
+                    "userId" to userId,
+                    "role" to role.toString()
+                )
+            )
+            .issuedAt(now)
+            .expiration(expiryDate)
+            .signWith(secretKey)
+            .compact()
+    }
+
+    fun isValidToken(token: String): Boolean {
+        return try {
+            getClaims(token)
+            true
+        } catch (e: Exception) {
+            when (e) {
+                is SecurityException, is MalformedJwtException -> {
+                    logger.info { "Invalid JWT $e" }
+                }
+
+                is ExpiredJwtException -> {
+                    logger.info { "Expired JWT $e" }
+                }
+
+                is UnsupportedJwtException -> {
+                    logger.info { "Unsupported JWT $e" }
+                }
+
+                is IllegalArgumentException -> {
+                    logger.info { "JWT claims string is empty $e" }
+                }
+            }
+            false
+        }
+    }
+
+    fun getUserId(token: String): Long {
+        return getClaims(token).get("userId", Long::class.java)
+    }
+
+    fun getRole(token: String): String {
+        return getClaims(token).get("role", String::class.java)
+    }
+
+    private fun getClaims(token: String): Claims {
+        return Jwts.parser()
+            .verifyWith(secretKey)
+            .build()
+            .parseSignedClaims(token)
+            .payload
+    }
+
+    fun getAuthentication(accessToken: String): Authentication {
+        val claims = getClaims(accessToken)
+        val userId = claims.get("userId", Long::class.java)
+        val user = userService.getUserById(userId)
+        return CustomAuthentication(user!!)
+    }
+}

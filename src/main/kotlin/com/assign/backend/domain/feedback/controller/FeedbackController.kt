@@ -10,7 +10,6 @@ import com.assign.backend.global.response.ResponseData
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,7 +18,7 @@ class FeedbackController(
     private val feedbackService: FeedbackService,
     private val requestInfo: RequestInfo,
 ) {
-    
+
     @PostMapping
     fun createFeedback(
         @RequestBody request: CreateFeedbackRequest
@@ -40,7 +39,11 @@ class FeedbackController(
     @GetMapping
     fun getFeedbacks(
         @RequestParam positive: Boolean?,
-        @PageableDefault(size = 10, sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable
+        @PageableDefault(
+            size = 10,
+            sort = ["createdAt"],
+            direction = Sort.Direction.DESC
+        ) pageable: Pageable
     ): ResponseData<List<FeedbackResponse>> {
         val results = feedbackService.getFeedbackList(requestInfo.user.id, positive, pageable)
         return ResponseData.success(results)

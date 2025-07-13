@@ -6,6 +6,7 @@ import com.assign.backend.global.exception.CustomBadRequestException
 import com.assign.backend.global.exception.CustomNotFoundException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class UserService(
@@ -20,5 +21,9 @@ class UserService(
     fun getUserById(userId: Long): UserEntity {
         return userRepository.findByIdOrNull(userId)
             ?: throw CustomNotFoundException("존재하지 않는 회원입니다.")
+    }
+
+    fun countTodaySignup(start: LocalDateTime, end: LocalDateTime): Int {
+        return userRepository.countByCreatedAtBetween(start, end)
     }
 }

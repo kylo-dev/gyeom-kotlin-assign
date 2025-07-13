@@ -80,7 +80,8 @@ class FeedbackService(
     @Transactional
     fun updateStatus(feedbackId: Long, request: UpdateFeedbackStatusRequest) {
         val feedback = getFeedbackById(feedbackId)
-        feedback.status = request.status
+        println(request.positive)
+        feedback.changePositive(request.positive)
     }
 
     fun getFeedbackById(feedbackId: Long): FeedbackEntity {

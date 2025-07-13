@@ -1,7 +1,6 @@
 package com.assign.backend.domain.feedback.controller.dto.request
 
-import com.assign.backend.domain.feedback.entity.FeedbackStatus
-
 data class UpdateFeedbackStatusRequest(
-    val status: FeedbackStatus,
+    // 값 없을 시 false 주입
+    val positive: Boolean,
 )

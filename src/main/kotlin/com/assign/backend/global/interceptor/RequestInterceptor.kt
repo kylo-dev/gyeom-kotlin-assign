@@ -36,6 +36,5 @@ class RequestInterceptor(
     }
 
     fun getAuthentication(): UserEntity? =
-        (SecurityContextHolder.getContext().authentication
-                as? CustomAuthentication)?.user
+        (SecurityContextHolder.getContext().authentication as? CustomAuthentication)?.user
 }

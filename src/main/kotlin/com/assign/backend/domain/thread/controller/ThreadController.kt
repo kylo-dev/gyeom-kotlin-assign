@@ -20,7 +20,7 @@ class ThreadController(
     fun deleteThread(
         @PathVariable threadId: Long,
     ): ResponseData<String> {
-        threadService.deleteThread(requestInfo.user.id!!, threadId)
+        threadService.deleteThread(requestInfo.user.id, threadId)
         return ResponseData.success("스레드 삭제에 성공했습니다.")
     }
 }

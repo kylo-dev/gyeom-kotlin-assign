@@ -2,6 +2,8 @@ package com.assign.backend.domain.auth.service
 
 import com.assign.backend.domain.auth.controller.dto.request.LoginRequest
 import com.assign.backend.domain.auth.controller.dto.request.SignupRequest
+import com.assign.backend.domain.login_log.entity.LoginLogEntity
+import com.assign.backend.domain.login_log.repository.LoginLogJpaRepository
 import com.assign.backend.domain.user.repository.UserMapper
 import com.assign.backend.domain.user.repository.UserRepository
 import com.assign.backend.domain.user.service.UserService
@@ -17,6 +19,7 @@ class AuthService(
     private val userService: UserService,
     private val passwordEncoder: PasswordEncoder,
     private val jwtProvider: JwtProvider,
+    private val loginLogJpaRepository: LoginLogJpaRepository,
 ) {
 
     fun signup(request: SignupRequest) {
@@ -32,7 +35,10 @@ class AuthService(
     fun login(request: LoginRequest): TokenResponse {
         val user = userService.getUserByEmail(request.email)
         validatePassword(request.password, user.password)
-        val token = jwtProvider.generateToken(user.id!!, user.role)
+        val token = jwtProvider.generateToken(user.id, user.role)
+        loginLogJpaRepository.save(
+            LoginLogEntity(user = user)
+        )
         return TokenResponse(token)
     }
 

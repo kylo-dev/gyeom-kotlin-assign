@@ -19,11 +19,14 @@ class FeedbackEntity(
     @ManyToOne(fetch = FetchType.LAZY)
     val user: UserEntity,
 
-    val positive: Boolean,
+    var positive: Boolean,
 
     @Enumerated(EnumType.STRING)
     var status: FeedbackStatus = FeedbackStatus.PENDING,
 ): BaseTimeEntity() {
+    fun changePositive(positive: Boolean) {
+        this.positive = positive
+    }
 }
 
 enum class FeedbackStatus {

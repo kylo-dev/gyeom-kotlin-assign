@@ -81,8 +81,8 @@ class JwtProvider(
 
     fun getAuthentication(accessToken: String): Authentication {
         val claims = getClaims(accessToken)
-        val userId = claims.get("userId", Long::class.java)
+        val userId = (claims["userId"] as Number).toLong()
         val user = userService.getUserById(userId)
-        return CustomAuthentication(user!!)
+        return CustomAuthentication(user)
     }
 }

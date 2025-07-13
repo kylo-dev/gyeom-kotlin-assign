@@ -30,7 +30,7 @@ class ChatController(
     fun createChat(
         @RequestBody request: CreateChatRequest,
     ): ResponseData<ChatResponse> {
-        return ResponseData.success(chatService.createChat(requestInfo.user.id!!, request))
+        return ResponseData.success(chatService.createChat(requestInfo.user.id, request))
     }
 
     @GetMapping
@@ -38,7 +38,7 @@ class ChatController(
     fun getChats(
         @PageableDefault(size = 10, sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable
     ): ResponseData<List<ThreadGroupResponse>> {
-        return ResponseData.success(chatService.getUserChats(requestInfo.user.id!!, pageable))
+        return ResponseData.success(chatService.getUserChats(requestInfo.user.id, pageable))
     }
 
 }

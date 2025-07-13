@@ -6,4 +6,6 @@ object UrlConstant {
     const val CHAT = "/api/chats"
     const val THREAD = "/api/threads"
     const val FEEDBACK = "/api/feedbacks"
+    const val ADMIN = "/api/admin"
+    const val ANALYTICS = "/analytics"
 }

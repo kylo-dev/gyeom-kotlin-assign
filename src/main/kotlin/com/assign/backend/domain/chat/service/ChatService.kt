@@ -37,11 +37,11 @@ class ChatService(
 
         val answer = generateAnswer(request.question, request.model)
         val newChat = saveChat(thread!!, request.question, answer)
-        return ChatResponse(newChat.id!!, newChat.question, newChat.answer, newChat.createdAt!!)
+        return ChatResponse(newChat.id, newChat.question, newChat.answer, newChat.createdAt)
     }
 
     fun isExpiredThread(lastThread: ThreadEntity?, now: LocalDateTime): Boolean {
-        return lastThread?.createdAt!!.plusMinutes(30).isBefore(now)
+        return (lastThread == null || lastThread.createdAt.plusMinutes(30).isBefore(now))
     }
 
     private fun generateAnswer(question: String, model: String?): String {
@@ -58,15 +58,23 @@ class ChatService(
     fun getUserChats(userId: Long, pageable: Pageable): List<ThreadGroupResponse> {
         val threads = threadJpaRepository.findAllByUserId(userId)
         return threads.map { thread ->
-            val chats = chatRepository.findByThreadId(thread.id!!, pageable)
+            val chats = chatRepository.findByThreadId(thread.id, pageable)
                 .map { ChatResponse.of(it) }
                 .toList()
-            ThreadGroupResponse.of(thread.id!!, chats)
+            ThreadGroupResponse.of(thread.id, chats)
         }
     }
 
     fun getChatById(chatId: Long): ChatEntity {
         return chatRepository.findByIdOrNull(chatId)
             ?: throw CustomNotFoundException("존재하지 않는 채팅입니다.")
+    }
+
+    fun countTodayChat(start: LocalDateTime, end: LocalDateTime): Int {
+        return chatRepository.countByCreatedAtBetween(start, end)
+    }
+
+    fun getTodayChats(start: LocalDateTime, end: LocalDateTime): List<ChatEntity> {
+        return chatRepository.findAllByCreatedAtBetween(start, end)
     }
 }

@@ -1,4 +1,4 @@
-package com.assign.backend.global
+package com.assign.backend.global.util
 
 object UrlConstant {
     const val AUTH = "/api/auth"

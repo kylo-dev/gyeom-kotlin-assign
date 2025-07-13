@@ -1,7 +1,7 @@
 package com.assign.backend.domain.thread.controller
 
 import com.assign.backend.domain.thread.domain.service.ThreadService
-import com.assign.backend.global.UrlConstant
+import com.assign.backend.global.util.UrlConstant
 import com.assign.backend.global.annotation.RequestInfo
 import com.assign.backend.global.response.ResponseData
 import org.springframework.web.bind.annotation.DeleteMapping

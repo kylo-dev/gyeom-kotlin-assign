@@ -2,9 +2,9 @@ package com.assign.backend.domain.chat.domain.service
 
 import com.assign.backend.domain.chat.domain.model.Chat
 import com.assign.backend.domain.chat.domain.model.ChatId
+import com.assign.backend.domain.chat.domain.model.UserChat
 import com.assign.backend.domain.chat.domain.repository.ChatRepositoryPort
 import com.assign.backend.domain.thread.domain.model.Thread
-import com.assign.backend.domain.thread.domain.service.ThreadService
 import com.assign.backend.global.util.orNotFound
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -26,7 +26,7 @@ class ChatService(
         return chatRepository.countByCreatedAtBetween(start, end)
     }
 
-    fun getTodayChats(start: LocalDateTime, end: LocalDateTime): List<Chat> {
+    fun getTodayChats(start: LocalDateTime, end: LocalDateTime): List<UserChat> {
         return chatRepository.findAllByCreatedAtBetween(start, end)
     }
 

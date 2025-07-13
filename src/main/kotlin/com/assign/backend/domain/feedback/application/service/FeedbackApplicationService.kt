@@ -22,7 +22,7 @@ class FeedbackApplicationService(
         val chat = chatService.getChatById(request.chatId)
 
         // 권한 체크: 자신이 만든 대화만 피드백 가능 (관리자 제외)
-        if (chat.getUserId() != user.getUserId()) {
+        if (chat.userIdValue != user.userId) {
             throw CustomBadRequestException("해당 대화에 피드백을 작성할 수 없습니다.")
         }
 

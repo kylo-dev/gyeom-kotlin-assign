@@ -7,7 +7,6 @@ import com.assign.backend.domain.user.domain.model.User
 import com.assign.backend.domain.user.domain.model.UserId
 import com.assign.backend.global.exception.CustomBadRequestException
 import com.assign.backend.global.util.orNotFound
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,7 +20,7 @@ class ThreadService(
     @Transactional
     fun deleteThread(user: User, threadId: Long) {
         val thread = findThreadById(ThreadId(threadId))
-        if (thread.getUserId() != user.getUserId()) {
+        if (thread.userIdValue != user.userId) {
             throw CustomBadRequestException("잘못된 요청입니다.")
         }
         repositoryPort.delete(thread)

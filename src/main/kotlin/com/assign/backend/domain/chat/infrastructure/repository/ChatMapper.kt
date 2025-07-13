@@ -5,14 +5,16 @@ import com.assign.backend.domain.chat.domain.model.ChatId
 import com.assign.backend.domain.chat.entity.ChatEntity
 import com.assign.backend.domain.common.Timestamps
 import com.assign.backend.domain.thread.domain.model.Thread
+import com.assign.backend.domain.thread.domain.model.ThreadId
 import com.assign.backend.domain.thread.entity.ThreadEntity
-import com.assign.backend.domain.thread.infrastruture.repository.ThreadMapper
+import com.assign.backend.domain.user.domain.model.UserId
+import com.assign.backend.domain.user.entity.UserEntity
 
 object ChatMapper {
     fun createChat(thread: Thread, question: String, answer: String): ChatEntity {
-        val threadEntity = ThreadMapper.toEntity(thread)
         return ChatEntity(
-            thread = threadEntity,
+            user = UserEntity.referenceOf(thread.userIdValue),
+            thread = ThreadEntity.referenceOf(thread.threadId),
             question = question,
             answer = answer
         )
@@ -21,7 +23,8 @@ object ChatMapper {
     fun toModel(entity: ChatEntity): Chat {
         return Chat(
             id = ChatId(entity.id),
-            thread = ThreadMapper.toModel(entity.thread),
+            userId = UserId(entity.user.id),
+            threadId = ThreadId(entity.thread.id),
             question = entity.question,
             answer = entity.answer,
             timestamps = Timestamps(entity.createdAt, entity.updatedAt)
@@ -31,7 +34,8 @@ object ChatMapper {
     fun toEntity(model: Chat): ChatEntity {
         return ChatEntity(
             id = model.id.value,
-            thread = ThreadMapper.toEntity(model.thread),
+            user = UserEntity.referenceOf(model.userIdValue),
+            thread = ThreadEntity.referenceOf(model.threadIdValue),
             question = model.question,
             answer = model.answer,
         )

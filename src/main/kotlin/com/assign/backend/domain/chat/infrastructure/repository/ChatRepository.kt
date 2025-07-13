@@ -2,6 +2,7 @@ package com.assign.backend.domain.chat.infrastructure.repository
 
 import com.assign.backend.domain.chat.domain.model.Chat
 import com.assign.backend.domain.chat.domain.model.ChatId
+import com.assign.backend.domain.chat.domain.model.UserChat
 import com.assign.backend.domain.chat.domain.repository.ChatRepositoryPort
 import com.assign.backend.domain.thread.domain.model.Thread
 import com.assign.backend.domain.thread.domain.model.ThreadId
@@ -32,9 +33,9 @@ class ChatRepository(
     override fun findAllByCreatedAtBetween(
         start: LocalDateTime,
         end: LocalDateTime
-    ): List<Chat> {
+    ): List<UserChat> {
         return repository.findAllByCreatedAtBetween(start, end)
-            .map { ChatMapper.toModel(it) }
+            .map { UserChat.from(it) }
     }
 
     override fun deleteChatsByThreadId(threadId: ThreadId) {

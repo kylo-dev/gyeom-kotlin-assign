@@ -6,7 +6,7 @@ import com.assign.backend.domain.feedback.controller.dto.request.CreateFeedbackR
 import com.assign.backend.domain.feedback.controller.dto.request.UpdateFeedbackStatusRequest
 import com.assign.backend.domain.feedback.controller.dto.response.FeedbackResponse
 import com.assign.backend.domain.feedback.domain.service.FeedbackService
-import com.assign.backend.global.UrlConstant
+import com.assign.backend.global.util.UrlConstant
 import com.assign.backend.global.annotation.RequestInfo
 import com.assign.backend.global.response.ResponseData
 import org.springframework.data.domain.Pageable

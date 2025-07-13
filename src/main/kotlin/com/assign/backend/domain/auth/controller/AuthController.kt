@@ -3,7 +3,7 @@ package com.assign.backend.domain.auth.controller
 import com.assign.backend.domain.auth.application.service.AuthApplicationService
 import com.assign.backend.domain.auth.controller.dto.request.LoginRequest
 import com.assign.backend.domain.auth.controller.dto.request.SignupRequest
-import com.assign.backend.global.UrlConstant
+import com.assign.backend.global.util.UrlConstant
 import com.assign.backend.global.jwt.TokenResponse
 import com.assign.backend.global.response.ResponseData
 import jakarta.validation.Valid

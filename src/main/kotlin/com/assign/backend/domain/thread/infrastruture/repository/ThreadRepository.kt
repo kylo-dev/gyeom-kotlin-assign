@@ -28,7 +28,7 @@ class ThreadRepository(
     }
 
     override fun delete(thread: Thread) {
-        repository.deleteById(thread.getThreadId())
+        repository.deleteById(thread.threadId)
     }
 
     override fun save(user: User): Thread {

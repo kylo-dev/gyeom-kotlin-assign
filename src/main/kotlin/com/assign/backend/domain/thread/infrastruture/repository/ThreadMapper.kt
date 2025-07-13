@@ -6,29 +6,28 @@ import com.assign.backend.domain.thread.domain.model.ThreadId
 import com.assign.backend.domain.thread.entity.ThreadEntity
 import com.assign.backend.domain.user.domain.model.User
 import com.assign.backend.domain.user.domain.model.UserId
+import com.assign.backend.domain.user.entity.UserEntity
 import com.assign.backend.domain.user.infrastructure.repository.UserMapper
 
 object ThreadMapper {
     fun createThread(user: User): ThreadEntity {
-        val userEntity = UserMapper.toEntity(user)
         return ThreadEntity(
-            user = userEntity
+            user = UserMapper.toEntity(user)
         )
     }
 
     fun toModel(entity: ThreadEntity): Thread {
         return Thread(
             id = ThreadId(entity.id),
-            user = UserMapper.toModel(entity.user),
+            userId = UserId(entity.user.id),
             timestamps = Timestamps(entity.createdAt, entity.updatedAt)
         )
     }
 
     fun toEntity(model: Thread): ThreadEntity {
-        val userEntity = UserMapper.toEntity(model.user)
         return ThreadEntity(
-            id = model.getThreadId(),
-            user = userEntity,
+            id = model.threadId,
+            user = UserEntity.referenceOf(model.userIdValue),
         )
     }
 }

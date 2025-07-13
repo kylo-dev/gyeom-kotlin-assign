@@ -4,8 +4,7 @@ import com.assign.backend.domain.chat.application.service.ChatApplicationService
 import com.assign.backend.domain.chat.controller.dto.response.ChatResponse
 import com.assign.backend.domain.chat.controller.dto.request.CreateChatRequest
 import com.assign.backend.domain.chat.controller.dto.response.ThreadGroupResponse
-import com.assign.backend.domain.chat.domain.service.ChatService
-import com.assign.backend.global.UrlConstant
+import com.assign.backend.global.util.UrlConstant
 import com.assign.backend.global.annotation.RequestInfo
 import com.assign.backend.global.annotation.RequireAuth
 import com.assign.backend.global.response.ResponseData

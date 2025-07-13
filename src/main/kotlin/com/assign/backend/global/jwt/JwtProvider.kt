@@ -3,7 +3,7 @@ package com.assign.backend.global.jwt
 import com.assign.backend.domain.user.domain.model.UserId
 import com.assign.backend.domain.user.entity.Role
 import com.assign.backend.domain.user.domain.service.UserService
-import com.assign.backend.global.logger
+import com.assign.backend.global.util.logger
 import com.assign.backend.global.security.CustomAuthentication
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys

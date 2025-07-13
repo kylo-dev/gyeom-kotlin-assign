@@ -2,8 +2,8 @@ package com.assign.backend.domain.analytics.controller
 
 import com.assign.backend.domain.analytics.controller.dto.response.ActivitySummaryResponse
 import com.assign.backend.domain.analytics.domain.service.AnalyticsService
-import com.assign.backend.global.UrlConstant.ADMIN
-import com.assign.backend.global.UrlConstant.ANALYTICS
+import com.assign.backend.global.util.UrlConstant.ADMIN
+import com.assign.backend.global.util.UrlConstant.ANALYTICS
 import com.assign.backend.global.response.ResponseData
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType

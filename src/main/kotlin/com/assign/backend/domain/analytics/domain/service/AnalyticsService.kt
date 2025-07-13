@@ -1,6 +1,8 @@
 package com.assign.backend.domain.analytics.domain.service
 
 import com.assign.backend.domain.analytics.application.dto.response.ActivitySummaryResult
+import com.assign.backend.domain.chat.domain.model.Chat
+import com.assign.backend.domain.chat.domain.model.UserChat
 import com.assign.backend.domain.chat.domain.service.ChatService
 import com.assign.backend.domain.login_log.domain.service.LoginLogService
 import com.assign.backend.domain.user.domain.service.UserService
@@ -35,11 +37,11 @@ class AnalyticsService(
     fun generateTodayCsv(): String {
         val (start, end) = todayRange()
 
-        val todayChats = chatService.getTodayChats(start, end)
+        val todayChats: List<UserChat> = chatService.getTodayChats(start, end)
 
         val header = "chat_id,question,answer,created_at,user_email\n"
         val body = todayChats.joinToString("\n") {
-            "${it.id.value},\"${it.question}\",\"${it.answer}\",${it.timestamps.createdAt},${it.thread.user.email}"
+            "${it.chat.chatId},\"${it.chat.question}\",\"${it.chat.answer}\",${it.chat.timestamps.createdAt},${it.user.emailValue}"
         }
         return header + body
     }

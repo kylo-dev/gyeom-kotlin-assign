@@ -9,7 +9,6 @@ import com.assign.backend.domain.thread.domain.model.Thread
 import com.assign.backend.domain.thread.domain.model.ThreadId
 import com.assign.backend.domain.thread.domain.service.ThreadService
 import com.assign.backend.domain.user.domain.model.User
-import com.assign.backend.domain.user.domain.model.UserId
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
@@ -43,15 +42,14 @@ class ChatApplicationService(
     fun getUserChats(user: User, pageable: Pageable): List<ThreadGroupResult> {
 
         // 1. 사용자의 모든 스레드 조회
-        val threads: List<Thread> =
-            threadService.findAllByUserId(UserId(user.getUserId()), pageable)
-        val threadIds = threads.map { it.getThreadId() }
+        val threads: List<Thread> = threadService.findAllByUserId(user.id, pageable)
+        val threadIds = threads.map { it.threadId }
 
         // 2. 스레드의 해당하는 모든 채팅 조회
         val chats = chatService.findTopNChatsByThreadIds(threadIds, 10)
 
         // 3. 스레드-채팅 그룹핑
-        val chatsGroup: Map<ThreadId, List<Chat>> = chats.groupBy { it.thread.id }
+        val chatsGroup: Map<ThreadId, List<Chat>> = chats.groupBy { it.threadId }
 
         return threads.map { thread ->
             val groupChats = chatsGroup[thread.id].orEmpty()

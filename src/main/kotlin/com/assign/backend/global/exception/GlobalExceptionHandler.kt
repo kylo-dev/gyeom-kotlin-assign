@@ -1,6 +1,6 @@
 package com.assign.backend.global.exception
 
-import com.assign.backend.global.logger
+import com.assign.backend.global.util.logger
 import com.assign.backend.global.response.ResponseData
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

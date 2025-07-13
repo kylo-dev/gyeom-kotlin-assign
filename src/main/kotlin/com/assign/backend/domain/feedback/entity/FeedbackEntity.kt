@@ -14,9 +14,11 @@ class FeedbackEntity(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chat_id")
     val chat: ChatEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     val user: UserEntity,
 
     var positive: Boolean,

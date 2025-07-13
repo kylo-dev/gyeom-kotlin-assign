@@ -1,6 +1,6 @@
 package com.assign.backend.domain.chat.controller.dto.response
 
-import com.assign.backend.domain.chat.entity.ChatEntity
+import com.assign.backend.domain.chat.application.dto.response.ChatResult
 import java.time.LocalDateTime
 
 data class ChatResponse(
@@ -10,12 +10,12 @@ data class ChatResponse(
     val createdAt: LocalDateTime,
 ) {
     companion object {
-        fun of(chat: ChatEntity): ChatResponse {
+        fun from(result: ChatResult): ChatResponse {
             return ChatResponse(
-                chat.id!!,
-                chat.question,
-                chat.answer,
-                chat.createdAt!!,
+                result.id.value,
+                result.question,
+                result.answer,
+                result.timestamps.createdAt,
             )
         }
     }

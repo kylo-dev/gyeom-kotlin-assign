@@ -31,7 +31,7 @@ class AuthApplicationService(
 
     fun login(request: LoginCommand): TokenResult {
         val user = userService.getUserByEmail(request.email)
-        if (user.password.matches(request.password)) {
+        if (!user.password.matches(request.password)) {
             throw CustomBadRequestException("이메일 또는 비밀번호가 잘못되었습니다.")
         }
         val token = jwtProvider.generateToken(user.id, user.role)

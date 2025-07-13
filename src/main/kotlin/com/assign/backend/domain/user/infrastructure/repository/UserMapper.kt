@@ -19,7 +19,7 @@ object UserMapper {
         )
     }
 
-    fun toDomain(entity: UserEntity): User {
+    fun toModel(entity: UserEntity): User {
         return User(
             id = UserId(entity.id),
             email = Email(entity.email),

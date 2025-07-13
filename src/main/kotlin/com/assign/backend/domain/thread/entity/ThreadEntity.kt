@@ -13,9 +13,10 @@ class ThreadEntity(
     val id: Long = 0,
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     val user: UserEntity,
 
-    @OneToMany(mappedBy = "thread", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    @OneToMany(mappedBy = "thread", cascade = [CascadeType.ALL], orphanRemoval = true)
     val chats: MutableList<ChatEntity> = mutableListOf()
 ): BaseTimeEntity() {
 }

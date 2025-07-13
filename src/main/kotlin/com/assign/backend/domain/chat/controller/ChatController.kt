@@ -1,5 +1,6 @@
 package com.assign.backend.domain.chat.controller
 
+import com.assign.backend.domain.chat.application.service.ChatApplicationService
 import com.assign.backend.domain.chat.controller.dto.response.ChatResponse
 import com.assign.backend.domain.chat.controller.dto.request.CreateChatRequest
 import com.assign.backend.domain.chat.controller.dto.response.ThreadGroupResponse
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(UrlConstant.CHAT)
 class ChatController(
-    private val chatService: ChatService,
+    private val chatApplicationService: ChatApplicationService,
     private val requestInfo: RequestInfo,
 ) {
 
@@ -29,7 +30,8 @@ class ChatController(
     fun createChat(
         @RequestBody request: CreateChatRequest,
     ): ResponseData<ChatResponse> {
-        return ResponseData.success(chatService.createChat(requestInfo.user.id, request))
+        val serviceRequest = request.toServiceRequest(requestInfo.user)
+        return ResponseData.success(chatApplicationService.createChat(serviceRequest).toResponse())
     }
 
     @GetMapping
@@ -37,7 +39,8 @@ class ChatController(
     fun getChats(
         @PageableDefault(size = 10, sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable
     ): ResponseData<List<ThreadGroupResponse>> {
-        return ResponseData.success(chatService.getUserChats(requestInfo.user.id, pageable))
+        val threadGroupResults = chatApplicationService.getUserChats(requestInfo.user, pageable)
+        return ResponseData.success(threadGroupResults.map { it.toResponse() })
     }
 
 }

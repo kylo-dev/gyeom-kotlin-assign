@@ -1,80 +1,36 @@
 package com.assign.backend.domain.chat.domain.service
 
-import com.assign.backend.domain.chat.controller.dto.response.ChatResponse
-import com.assign.backend.domain.chat.controller.dto.request.CreateChatRequest
-import com.assign.backend.domain.chat.controller.dto.response.ThreadGroupResponse
-import com.assign.backend.domain.chat.entity.ChatEntity
-import com.assign.backend.domain.chat.infrastructure.repository.ChatMapper
-import com.assign.backend.domain.chat.infrastructure.repository.ChatRepository
-import com.assign.backend.domain.thread.entity.ThreadEntity
-import com.assign.backend.domain.thread.repository.ThreadJpaRepository
-import com.assign.backend.domain.thread.repository.ThreadMapper
-import com.assign.backend.domain.user.domain.service.UserService
-import com.assign.backend.global.exception.CustomNotFoundException
-import org.springframework.data.domain.Pageable
-import org.springframework.data.repository.findByIdOrNull
+import com.assign.backend.domain.chat.domain.model.Chat
+import com.assign.backend.domain.chat.domain.model.ChatId
+import com.assign.backend.domain.chat.domain.repository.ChatRepositoryPort
+import com.assign.backend.domain.thread.domain.model.Thread
+import com.assign.backend.domain.thread.domain.service.ThreadService
+import com.assign.backend.global.util.orNotFound
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
 class ChatService(
-    private val chatRepository: ChatRepository,
-    private val threadJpaRepository: ThreadJpaRepository,
-    private val userService: UserService,
+    private val chatRepository: ChatRepositoryPort,
 ) {
-
-    fun createChat(userId: Long, request: CreateChatRequest): ChatResponse {
-        val loginUser = userService.getUserById(userId)
-        val lastThread =
-            threadJpaRepository.findFirstByUserIdOrderByCreatedAtDesc(userId)
-        val now = LocalDateTime.now()
-
-        val thread = if (isExpiredThread(lastThread, now)) {
-            threadJpaRepository.save(ThreadMapper.createThread(loginUser))
-        } else {
-            lastThread
-        }
-
-        val answer = generateAnswer(request.question, request.model)
-        val newChat = saveChat(thread!!, request.question, answer)
-        return ChatResponse(newChat.id, newChat.question, newChat.answer, newChat.createdAt)
+    fun saveChat(thread: Thread, question: String, answer: String): Chat {
+        return chatRepository.saveChat(thread, question, answer)
     }
 
-    fun isExpiredThread(lastThread: ThreadEntity?, now: LocalDateTime): Boolean {
-        return (lastThread == null || lastThread.createdAt.plusMinutes(30).isBefore(now))
-    }
-
-    private fun generateAnswer(question: String, model: String?): String {
-        // OpenAI API 연동
-        return "답변 예시 (${question}에 대한 AI 응답)"
-    }
-
-    fun saveChat(thread: ThreadEntity, question: String, answer: String): ChatEntity {
-        return chatRepository.save(
-            ChatMapper.createChat(thread, question, answer)
-        )
-    }
-
-    fun getUserChats(userId: Long, pageable: Pageable): List<ThreadGroupResponse> {
-        val threads = threadJpaRepository.findAllByUserId(userId)
-        return threads.map { thread ->
-            val chats = chatRepository.findByThreadId(thread.id, pageable)
-                .map { ChatResponse.of(it) }
-                .toList()
-            ThreadGroupResponse.of(thread.id, chats)
-        }
-    }
-
-    fun getChatById(chatId: Long): ChatEntity {
-        return chatRepository.findByIdOrNull(chatId)
-            ?: throw CustomNotFoundException("존재하지 않는 채팅입니다.")
+    fun getChatById(chatId: Long): Chat {
+        return chatRepository.findById(ChatId(chatId))
+            .orNotFound("존재하지 않는 채팅입니다.")
     }
 
     fun countTodayChat(start: LocalDateTime, end: LocalDateTime): Int {
         return chatRepository.countByCreatedAtBetween(start, end)
     }
 
-    fun getTodayChats(start: LocalDateTime, end: LocalDateTime): List<ChatEntity> {
+    fun getTodayChats(start: LocalDateTime, end: LocalDateTime): List<Chat> {
         return chatRepository.findAllByCreatedAtBetween(start, end)
+    }
+
+    fun findTopNChatsByThreadIds(threadIds: List<Long>, limit: Int): List<Chat> {
+        return chatRepository.findTopNChatsByThreadIds(threadIds)
     }
 }

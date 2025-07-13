@@ -14,12 +14,12 @@ class UserRepository(
 ) : UserRepositoryPort {
     override fun findUserByEmail(email: String): User? {
         return userJpaRepository.findByEmail(email)
-            ?.let(UserMapper::toDomain)
+            ?.let(UserMapper::toModel)
     }
 
     override fun findUserById(userId: UserId): User? {
         return userJpaRepository.findByIdOrNull(userId.value)
-            ?.let(UserMapper::toDomain)
+            ?.let(UserMapper::toModel)
     }
 
     override fun countTodaySignup(start: LocalDateTime, end: LocalDateTime): Int {
@@ -27,7 +27,7 @@ class UserRepository(
     }
 
     override fun save(userEntity: UserEntity): User {
-        return userJpaRepository.save(userEntity).let(UserMapper::toDomain)
+        return userJpaRepository.save(userEntity).let(UserMapper::toModel)
     }
 
     override fun existsByEmail(email: String): Boolean {

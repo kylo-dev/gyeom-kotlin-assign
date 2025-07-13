@@ -9,4 +9,8 @@ data class Chat(
     val question: String,
     val answer: String,
     val timestamps: Timestamps,
-)
+) {
+    fun getUserId(): Long {
+        return thread.getUserId()
+    }
+}

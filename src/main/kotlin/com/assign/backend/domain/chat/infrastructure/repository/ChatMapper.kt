@@ -27,4 +27,13 @@ object ChatMapper {
             timestamps = Timestamps(entity.createdAt, entity.updatedAt)
         )
     }
+
+    fun toEntity(model: Chat): ChatEntity {
+        return ChatEntity(
+            id = model.id.value,
+            thread = ThreadMapper.toEntity(model.thread),
+            question = model.question,
+            answer = model.answer,
+        )
+    }
 }

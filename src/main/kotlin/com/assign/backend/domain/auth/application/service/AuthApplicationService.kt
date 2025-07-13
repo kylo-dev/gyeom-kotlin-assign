@@ -3,7 +3,7 @@ package com.assign.backend.domain.auth.application.service
 import com.assign.backend.domain.auth.application.dto.request.LoginCommand
 import com.assign.backend.domain.auth.application.dto.request.SignupCommand
 import com.assign.backend.domain.login_log.entity.LoginLogEntity
-import com.assign.backend.domain.login_log.repository.LoginLogJpaRepository
+import com.assign.backend.domain.login_log.infrastructure.repository.LoginLogJpaRepository
 import com.assign.backend.domain.user.domain.model.Password
 import com.assign.backend.domain.user.domain.service.UserService
 import com.assign.backend.domain.user.infrastructure.repository.UserMapper

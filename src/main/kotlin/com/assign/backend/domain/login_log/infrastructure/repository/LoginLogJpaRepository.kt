@@ -1,4 +1,4 @@
-package com.assign.backend.domain.login_log.repository
+package com.assign.backend.domain.login_log.infrastructure.repository
 
 import com.assign.backend.domain.login_log.entity.LoginLogEntity
 import org.springframework.data.jpa.repository.JpaRepository

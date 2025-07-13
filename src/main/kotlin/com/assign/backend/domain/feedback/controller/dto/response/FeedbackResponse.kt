@@ -1,5 +1,6 @@
 package com.assign.backend.domain.feedback.controller.dto.response
 
+import com.assign.backend.domain.feedback.domain.Feedback
 import com.assign.backend.domain.feedback.entity.FeedbackEntity
 import com.assign.backend.domain.feedback.entity.FeedbackStatus
 import java.time.LocalDateTime
@@ -13,14 +14,14 @@ data class FeedbackResponse(
     val createdAt: LocalDateTime
 ) {
     companion object {
-        fun toResponse(feedback: FeedbackEntity): FeedbackResponse =
+        fun from(feedback: Feedback): FeedbackResponse =
             FeedbackResponse(
-                id = feedback.id,
-                chatId = feedback.chat.id,
-                userId = feedback.user.id,
+                id = feedback.id.value,
+                chatId = feedback.chatId.value,
+                userId = feedback.userId.value,
                 positive = feedback.positive,
                 status = feedback.status,
-                createdAt = feedback.createdAt!!,
+                createdAt = feedback.timestamps.createdAt,
             )
     }
 }

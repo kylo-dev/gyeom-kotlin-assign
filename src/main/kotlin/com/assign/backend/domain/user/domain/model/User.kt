@@ -11,5 +11,6 @@ data class User(
     val role: Role,
     val timestamps: Timestamps
 ) {
-    fun getUserId(): Long = id.value
+    val userId: Long get() = id.value
+    val emailValue: String get() = email.value
 }

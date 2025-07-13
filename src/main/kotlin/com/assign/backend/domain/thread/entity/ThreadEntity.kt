@@ -19,4 +19,12 @@ class ThreadEntity(
     @OneToMany(mappedBy = "thread", cascade = [CascadeType.ALL], orphanRemoval = true)
     val chats: MutableList<ChatEntity> = mutableListOf()
 ): BaseTimeEntity() {
+    companion object {
+        fun referenceOf(id: Long): ThreadEntity {
+            return ThreadEntity(
+                id = id,
+                user = UserEntity.referenceOf(0),
+            )
+        }
+    }
 }

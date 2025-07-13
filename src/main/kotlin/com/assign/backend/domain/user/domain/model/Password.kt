@@ -9,12 +9,10 @@ value class Password private constructor(
     companion object {
         private val encoder = BCryptPasswordEncoder()
 
-        fun encode(rawPassword: String): String =
-            encoder.encode(rawPassword)
+        fun encode(rawPassword: String): String = encoder.encode(rawPassword)
 
         fun of(password: String): Password = Password(password)
     }
 
-    fun matches(rawPassword: String): Boolean =
-        encoder.matches(rawPassword, value)
+    fun matches(rawPassword: String): Boolean = encoder.matches(rawPassword, value)
 }

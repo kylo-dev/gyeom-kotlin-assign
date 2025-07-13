@@ -7,7 +7,6 @@ import com.assign.backend.domain.user.domain.model.User
 import com.assign.backend.domain.user.domain.model.UserId
 import com.assign.backend.domain.user.entity.Role
 import com.assign.backend.domain.user.entity.UserEntity
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 
 object UserMapper {
     fun createUser(email: String, password: String, name: String): UserEntity {
@@ -32,7 +31,7 @@ object UserMapper {
 
     fun toEntity(model: User): UserEntity {
         return UserEntity(
-            id = model.getUserId(),
+            id = model.userId,
             email = model.email.value,
             password = model.password.value,
             name = model.name,

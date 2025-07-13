@@ -45,11 +45,11 @@ class GlobalExceptionHandler {
             .body(
                 ResponseData.error<Any>(
                     "COMMON400",
-                    """
-          Field ${fieldError?.field} 에서 에러 발생
-          입력한 값: ${fieldError?.rejectedValue}
-          에러 메시지: ${fieldError?.defaultMessage}
-        """.trimIndent()
+                    ValidationErrorDetail(
+                        field = fieldError?.field.orEmpty(),
+                        rejectedValue = fieldError?.rejectedValue,
+                        message = fieldError?.defaultMessage.orEmpty()
+                    )
                 )
             )
     }

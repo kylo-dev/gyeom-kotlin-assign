@@ -3,9 +3,10 @@ package com.assign.backend.domain.auth.controller
 import com.assign.backend.domain.auth.application.service.AuthApplicationService
 import com.assign.backend.domain.auth.controller.dto.request.LoginRequest
 import com.assign.backend.domain.auth.controller.dto.request.SignupRequest
-import com.assign.backend.global.jwt.TokenResponse
 import com.assign.backend.global.UrlConstant
+import com.assign.backend.global.jwt.TokenResponse
 import com.assign.backend.global.response.ResponseData
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,7 +19,7 @@ class AuthController(
 ) {
 
     @PostMapping("/signup")
-    fun signup(@RequestBody request: SignupRequest): ResponseData<String> {
+    fun signup(@RequestBody @Valid request: SignupRequest): ResponseData<String> {
         authApplicationService.signup(request.toServiceRequest())
         return ResponseData.success("회원가입에 성공했습니다.")
     }

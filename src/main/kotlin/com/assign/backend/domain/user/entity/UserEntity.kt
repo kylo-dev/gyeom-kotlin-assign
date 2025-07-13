@@ -1,6 +1,6 @@
 package com.assign.backend.domain.user.entity
 
-import com.assign.backend.domain.BaseTimeEntity
+import com.assign.backend.domain.common.BaseTimeEntity
 import jakarta.persistence.*
 
 @Entity

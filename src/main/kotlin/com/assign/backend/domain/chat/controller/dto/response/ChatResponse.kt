@@ -1,4 +1,4 @@
-package com.assign.backend.domain.chat.controller.dto
+package com.assign.backend.domain.chat.controller.dto.response
 
 import com.assign.backend.domain.chat.entity.ChatEntity
 import java.time.LocalDateTime

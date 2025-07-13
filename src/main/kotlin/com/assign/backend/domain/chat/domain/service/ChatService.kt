@@ -1,15 +1,15 @@
-package com.assign.backend.domain.chat.service
+package com.assign.backend.domain.chat.domain.service
 
-import com.assign.backend.domain.chat.controller.dto.ChatResponse
+import com.assign.backend.domain.chat.controller.dto.response.ChatResponse
 import com.assign.backend.domain.chat.controller.dto.request.CreateChatRequest
 import com.assign.backend.domain.chat.controller.dto.response.ThreadGroupResponse
 import com.assign.backend.domain.chat.entity.ChatEntity
-import com.assign.backend.domain.chat.repository.ChatMapper
-import com.assign.backend.domain.chat.repository.ChatRepository
+import com.assign.backend.domain.chat.infrastructure.repository.ChatMapper
+import com.assign.backend.domain.chat.infrastructure.repository.ChatRepository
 import com.assign.backend.domain.thread.entity.ThreadEntity
 import com.assign.backend.domain.thread.repository.ThreadJpaRepository
 import com.assign.backend.domain.thread.repository.ThreadMapper
-import com.assign.backend.domain.user.service.UserService
+import com.assign.backend.domain.user.domain.service.UserService
 import com.assign.backend.global.exception.CustomNotFoundException
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull

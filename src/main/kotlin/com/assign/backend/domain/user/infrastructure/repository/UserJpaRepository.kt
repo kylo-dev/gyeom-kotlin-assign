@@ -1,11 +1,10 @@
-package com.assign.backend.domain.user.repository
+package com.assign.backend.domain.user.infrastructure.repository
 
 import com.assign.backend.domain.user.entity.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
-import java.time.LocalDate
 import java.time.LocalDateTime
 
-interface UserRepository: JpaRepository<UserEntity, Long> {
+interface UserJpaRepository : JpaRepository<UserEntity, Long> {
     fun findByEmail(email: String): UserEntity?
     fun existsByEmail(email: String): Boolean
     fun countByCreatedAtBetween(start: LocalDateTime, end: LocalDateTime): Int

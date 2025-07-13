@@ -1,7 +1,5 @@
 package com.assign.backend.domain.chat.controller.dto.response
 
-import com.assign.backend.domain.chat.controller.dto.ChatResponse
-
 data class ThreadGroupResponse(
     val threadId: Long,
     val chats: List<ChatResponse>,

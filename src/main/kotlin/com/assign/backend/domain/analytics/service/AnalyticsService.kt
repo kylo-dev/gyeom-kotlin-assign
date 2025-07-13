@@ -1,9 +1,9 @@
 package com.assign.backend.domain.analytics.service
 
 import com.assign.backend.domain.analytics.controller.dto.response.ActivitySummaryResponse
-import com.assign.backend.domain.chat.service.ChatService
+import com.assign.backend.domain.chat.domain.service.ChatService
 import com.assign.backend.domain.login_log.repository.LoginLogJpaRepository
-import com.assign.backend.domain.user.service.UserService
+import com.assign.backend.domain.user.domain.service.UserService
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.time.LocalTime

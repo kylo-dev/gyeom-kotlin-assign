@@ -1,4 +1,4 @@
-package com.assign.backend.domain.chat.repository
+package com.assign.backend.domain.chat.infrastructure.repository
 
 import com.assign.backend.domain.chat.entity.ChatEntity
 import com.assign.backend.domain.thread.entity.ThreadEntity

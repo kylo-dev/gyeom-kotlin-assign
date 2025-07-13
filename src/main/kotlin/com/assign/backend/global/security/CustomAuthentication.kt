@@ -1,11 +1,12 @@
 package com.assign.backend.global.security
 
+import com.assign.backend.domain.user.domain.model.User
 import com.assign.backend.domain.user.entity.UserEntity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 
 class CustomAuthentication(
-    val user: UserEntity
+    val user: User
 ) : Authentication {
     override fun getName(): String {
         return user.name
@@ -23,7 +24,7 @@ class CustomAuthentication(
         throw UnsupportedOperationException()
     }
 
-    override fun getPrincipal(): UserEntity {
+    override fun getPrincipal(): User {
         return user
     }
 

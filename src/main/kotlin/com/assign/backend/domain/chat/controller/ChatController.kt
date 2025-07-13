@@ -1,9 +1,9 @@
 package com.assign.backend.domain.chat.controller
 
-import com.assign.backend.domain.chat.controller.dto.ChatResponse
+import com.assign.backend.domain.chat.controller.dto.response.ChatResponse
 import com.assign.backend.domain.chat.controller.dto.request.CreateChatRequest
 import com.assign.backend.domain.chat.controller.dto.response.ThreadGroupResponse
-import com.assign.backend.domain.chat.service.ChatService
+import com.assign.backend.domain.chat.domain.service.ChatService
 import com.assign.backend.global.UrlConstant
 import com.assign.backend.global.annotation.RequestInfo
 import com.assign.backend.global.annotation.RequireAuth
@@ -11,7 +11,6 @@ import com.assign.backend.global.response.ResponseData
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
-import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

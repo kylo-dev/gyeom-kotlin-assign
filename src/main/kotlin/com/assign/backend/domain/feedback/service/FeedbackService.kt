@@ -1,7 +1,7 @@
 package com.assign.backend.domain.feedback.service
 
 import com.assign.backend.domain.chat.entity.ChatEntity
-import com.assign.backend.domain.chat.service.ChatService
+import com.assign.backend.domain.chat.domain.service.ChatService
 import com.assign.backend.domain.feedback.controller.dto.request.CreateFeedbackRequest
 import com.assign.backend.domain.feedback.controller.dto.request.UpdateFeedbackStatusRequest
 import com.assign.backend.domain.feedback.controller.dto.response.FeedbackResponse
@@ -9,7 +9,7 @@ import com.assign.backend.domain.feedback.controller.dto.response.FeedbackRespon
 import com.assign.backend.domain.feedback.entity.FeedbackEntity
 import com.assign.backend.domain.feedback.repository.FeedbackJpaRepository
 import com.assign.backend.domain.user.entity.UserEntity
-import com.assign.backend.domain.user.service.UserService
+import com.assign.backend.domain.user.domain.service.UserService
 import com.assign.backend.global.exception.CustomBadRequestException
 import com.assign.backend.global.exception.CustomNotFoundException
 import org.springframework.data.domain.Page

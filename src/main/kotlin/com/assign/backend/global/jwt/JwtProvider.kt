@@ -1,7 +1,8 @@
 package com.assign.backend.global.jwt
 
+import com.assign.backend.domain.user.domain.model.UserId
 import com.assign.backend.domain.user.entity.Role
-import com.assign.backend.domain.user.service.UserService
+import com.assign.backend.domain.user.domain.service.UserService
 import com.assign.backend.global.logger
 import com.assign.backend.global.security.CustomAuthentication
 import io.jsonwebtoken.*
@@ -20,14 +21,14 @@ class JwtProvider(
     private val secretKey: SecretKey = Keys.hmacShaKeyFor(secretKey.toByteArray())
     private val expirationMs = 24 * 60 * 60 * 7000
 
-    fun generateToken(userId: Long, role: Role): String {
+    fun generateToken(userId: UserId, role: Role): String {
         val now = Date()
         val expiryDate = Date(now.time + expirationMs)
 
         return Jwts.builder()
             .claims(
                 mapOf(
-                    "userId" to userId,
+                    "userId" to userId.value,
                     "role" to role.toString()
                 )
             )
@@ -63,14 +64,6 @@ class JwtProvider(
         }
     }
 
-    fun getUserId(token: String): Long {
-        return getClaims(token).get("userId", Long::class.java)
-    }
-
-    fun getRole(token: String): String {
-        return getClaims(token).get("role", String::class.java)
-    }
-
     private fun getClaims(token: String): Claims {
         return Jwts.parser()
             .verifyWith(secretKey)
@@ -82,7 +75,7 @@ class JwtProvider(
     fun getAuthentication(accessToken: String): Authentication {
         val claims = getClaims(accessToken)
         val userId = (claims["userId"] as Number).toLong()
-        val user = userService.getUserById(userId)
+        val user = userService.getUserById(UserId(userId))
         return CustomAuthentication(user)
     }
 }

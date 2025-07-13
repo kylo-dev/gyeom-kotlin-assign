@@ -18,7 +18,12 @@ interface ThreadJpaRepository : JpaRepository<ThreadEntity, Long> {
     )
     fun findLatestThread(userId: Long): ThreadEntity?
 
-    @EntityGraph(attributePaths = ["user"])
+//    @EntityGraph(attributePaths = ["user"])
+    @Query("""
+        SELECT t FROM ThreadEntity t
+        JOIN FETCH t.user
+        WHERE t.user.id = :userId
+    """)
     fun findAllByUserId(userId: Long, pageable: Pageable): Page<ThreadEntity>
 
     @EntityGraph(attributePaths = ["user"])

@@ -1,6 +1,6 @@
 package com.assign.backend.global.interceptor
 
-import com.assign.backend.domain.user.entity.UserEntity
+import com.assign.backend.domain.user.domain.model.User
 import com.assign.backend.global.annotation.RequestInfo
 import com.assign.backend.global.annotation.RequireAuth
 import com.assign.backend.global.exception.CustomAuthenticationException
@@ -35,7 +35,6 @@ class RequestInterceptor(
         return true
     }
 
-    fun getAuthentication(): UserEntity? =
-        (SecurityContextHolder.getContext().authentication
-                as? CustomAuthentication)?.user
+    fun getAuthentication(): User? =
+        (SecurityContextHolder.getContext().authentication as? CustomAuthentication)?.user
 }

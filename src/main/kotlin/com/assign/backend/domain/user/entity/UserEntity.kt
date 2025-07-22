@@ -1,6 +1,7 @@
 package com.assign.backend.domain.user.entity
 
-import com.assign.backend.domain.BaseTimeEntity
+import com.assign.backend.domain.common.BaseTimeEntity
+import com.assign.backend.domain.thread.entity.ThreadEntity
 import jakarta.persistence.*
 
 @Entity
@@ -15,6 +16,17 @@ class UserEntity(
     @Enumerated(EnumType.STRING)
     val role: Role,
 ): BaseTimeEntity() {
+    companion object {
+        fun referenceOf(id: Long): UserEntity {
+            return UserEntity(
+                id = id,
+                email = "",
+                password = "",
+                name = "",
+                role = Role.MEMBER,
+            )
+        }
+    }
 }
 
 enum class Role {

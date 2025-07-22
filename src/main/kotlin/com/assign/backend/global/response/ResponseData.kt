@@ -1,5 +1,6 @@
 package com.assign.backend.global.response
 
+import com.assign.backend.global.exception.ValidationErrorDetail
 import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -24,5 +25,7 @@ data class ResponseData<T>(
         // FAIL METHOD
         fun <T> error(code: String, message: String): ResponseData<T> =
             ResponseData(code, message)
+        fun <T> error(code: String, detail: T): ResponseData<T> =
+            ResponseData(code = code, data = detail)
     }
 }

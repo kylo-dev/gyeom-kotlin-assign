@@ -1,7 +1,7 @@
 package com.assign.backend.domain.thread.controller
 
-import com.assign.backend.domain.thread.service.ThreadService
-import com.assign.backend.global.UrlConstant
+import com.assign.backend.domain.thread.domain.service.ThreadService
+import com.assign.backend.global.util.UrlConstant
 import com.assign.backend.global.annotation.RequestInfo
 import com.assign.backend.global.response.ResponseData
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -20,7 +20,7 @@ class ThreadController(
     fun deleteThread(
         @PathVariable threadId: Long,
     ): ResponseData<String> {
-        threadService.deleteThread(requestInfo.user.id!!, threadId)
+        threadService.deleteThread(requestInfo.user, threadId)
         return ResponseData.success("스레드 삭제에 성공했습니다.")
     }
 }

@@ -17,7 +17,7 @@ class JwtAuthenticationFilter(
 ) : OncePerRequestFilter() {
 
     private val pathMatcher = AntPathMatcher()
-    private val WHITE_URL_LIST = arrayOf("/api/login/**")
+    private val WHITE_URL_LIST = arrayOf("/api/auth/**")
     private val BEARER = "Bearer "
 
     override fun doFilterInternal(
